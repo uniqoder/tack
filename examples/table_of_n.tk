@@ -1,0 +1,38 @@
+main:
+  # Prompt
+  push ' '
+  push '>'
+  printc
+  printc
+
+  readn  # Read a number for table
+  push 0 # Stack [n, current = 0]
+
+# Stack invariant: [n, current]
+# breaks when `current > n * 10`
+table:
+  # Increment current and print it
+  over    # [n, current, n]
+  add     # [n, current += n]
+  dup     # [n, current, current]
+  printn  # [n, current]
+
+  # Print newline
+  push 10   # [n, current, 10]
+  printc    # [n, current]
+
+  # Check the condition
+  over        # [n, current, n]
+  push 10     # [n, current, n, 10]
+  mul         # [n, current, n * 10]
+  over        # [n, current, 10n, current]
+  gt          # [n, current, 10n > current]
+  jmpz done   # [n, current] if jumps else [n, current, boolean]
+  pop         # [n, current] boolean got popped
+  jmp table
+
+done:
+  # Stack cleanup [n, current]
+  pop # [n]
+  pop # []
+  exit

@@ -1,0 +1,23 @@
+# All execution starts from `main` label
+# Programs lacking `main` will cause a parse-time error.
+main:
+  push 0   # Sentinal for jmpz
+  push 10  # ASCII value of newline
+  push 'o'
+  push 'l'
+  push 'l'
+  push 'e'
+  push 'H'
+
+# Stack [0, 'o', 'l', 'l', 'e', 'H']
+# breaks when printc has consumed
+# all characters and only `0` at
+# the start remains.
+print:
+  printc
+  jmpz done
+  jmp print
+
+# Stack []
+done:
+  exit
